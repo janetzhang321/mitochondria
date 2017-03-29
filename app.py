@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import csv
+from utils import energy
 
 app = Flask(__name__)
 
@@ -13,6 +14,8 @@ def map():
 
 @app.route("/ports")
 def ports():
+    data = energy._test_interfaces()
+    print(data)
     return render_template('ports.html')
 
 if __name__ == '__main__': 
