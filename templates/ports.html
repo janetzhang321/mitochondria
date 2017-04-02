@@ -29,6 +29,7 @@
      var data = {{data | safe}}
 
      var consumption = data[0]['data']['consumption'];
+     console.log(consumption);
 
      var yScale = d3.scaleLinear()
                     .domain([0,d3.max(d3.values(consumption))])
@@ -40,9 +41,20 @@
                     .padding(.1);
 
      var bar = chart.selectAll("g")
-                    .data(consumption)
+                    .data(d3.entries(consumption))
                     .enter().append("g")
-                    .attr("transform", function(d) {return "translate(" + xScale(d) + ",0)";});
+                    .attr("transform", function(d) {return "translate(" + xScale(d.key) + ",0)";});
+
+     bar.append("rect")
+        .attr("y", function(d) { return yScale(d.value);})
+        .attr("height", function(d) {return height - yScale(d.value);})
+        .attr("width", xScale.bandwidth());
+
+     bar.append("text")
+        .attr("x", xScale.bandwidth() / 2)
+        .attr("y", function(d) {return yScale(d.value) + 3;})
+        .attr("dy", ".75em")
+        .text(function(d) {return d.value;});
 
     </script>
 </html>
