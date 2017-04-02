@@ -7,9 +7,25 @@
         <script type="text/javascript" src="static/js/dynamicEnergy.js"></script>
         <script type="text/javascript" src="static/js/d3.min.js"></script>
         <style>
-         .chart rect{
+         .bar{
              fill: steelblue;
          }
+
+         .axis text{
+             font: 10px sans-serif;
+         }
+
+         .axis path,
+         .axis line{
+             fill: none;
+             stroke: #000;
+             shape-rendering: crispEdges;
+         }
+
+         .x.axis path{
+             display: none;
+         }
+
 	      </style>
     </head>
 
@@ -19,12 +35,16 @@
     <script>
 
      // set the dimensions of the canvas
-     var width = 800;
-     var height = 800;
+
+     var margin = {top: 20, right: 30, bottom: 30, left: 40},
+         width = 800 - margin.left - margin.right,
+         height = 800 - margin.top - margin.bottom;
 
      var chart = d3.select(".chart")
-                   .attr("width",width)
-                   .attr("height",height);
+                   .attr("width", width + margin.left + margin.right)
+                   .attr("height", height + margin.top + margin.bottom)
+                   .append("g")
+                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
      var data = {{data | safe}}
 
@@ -32,7 +52,7 @@
      console.log(consumption);
 
      var yScale = d3.scaleLinear()
-                    .domain([0,d3.max(d3.values(consumption))])
+                    .domain([d3.max(d3.values(consumption)),0])
                     .range([0,height]);
 
      var xScale = d3.scaleBand()
@@ -40,21 +60,26 @@
                     .rangeRound([0,width])
                     .padding(.1);
 
-     var bar = chart.selectAll("g")
-                    .data(d3.entries(consumption))
-                    .enter().append("g")
-                    .attr("transform", function(d) {return "translate(" + xScale(d.key) + ",0)";});
+     chart.selectAll(".bar")
+          .data(d3.entries(consumption))
+          .enter().append("rect")
+          .attr("class","bar")
+          .attr("x", function(d) {return xScale(d.key)})
+          .attr("y", function(d) {return yScale(d.value)})
+          .attr("height", function(d) {return height - yScale(d.value);})
+          .attr("width", xScale.bandwidth());
 
-     bar.append("rect")
-        .attr("y", function(d) { return yScale(d.value);})
-        .attr("height", function(d) {return height - yScale(d.value);})
-        .attr("width", xScale.bandwidth());
+     var xAxis = d3.axisBottom(xScale);
+     var yAxis = d3.axisLeft(yScale);
 
-     bar.append("text")
-        .attr("x", xScale.bandwidth() / 2)
-        .attr("y", function(d) {return yScale(d.value) + 3;})
-        .attr("dy", ".75em")
-        .text(function(d) {return d.value;});
+     chart.append("g")
+          .attr("class","x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+     chart.append("g")
+          .attr("class","y axis")
+          .call(yAxis);
 
     </script>
 </html>
