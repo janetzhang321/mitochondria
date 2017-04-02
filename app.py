@@ -1,8 +1,9 @@
 from flask import Flask, render_template
-import csv
+import csv,json 
 from utils import energy
 
 app = Flask(__name__)
+data = energy.get_reports()
 
 @app.route("/", methods=['POST','GET'])
 def home():
@@ -14,9 +15,7 @@ def map():
 
 @app.route("/ports")
 def ports():
-    data = energy._test_interfaces()
-    print(data)
-    return render_template('ports.html')
+    return render_template('ports.html',data=data)
 
 if __name__ == '__main__': 
     app.debug = True
