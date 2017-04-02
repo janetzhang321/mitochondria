@@ -1,9 +1,11 @@
 from flask import Flask, render_template
-import csv,json 
+import csv,json,os 
 from utils import energy
 
 app = Flask(__name__)
 data = energy.get_reports()
+schema = energy._test_interfaces()
+print(schema)
 
 @app.route("/", methods=['POST','GET'])
 def home():
