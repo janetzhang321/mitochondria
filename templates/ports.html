@@ -4,7 +4,7 @@
         <title>
             Ports
         </title>
-        <script type="text/javascript" src="static/js/dynamicEnergy.js"></script>
+        <script type="text/javascript" src="static/js/ports.js"></script>
         <script type="text/javascript" src="static/js/d3.min.js"></script>
         <style>
          .bar{
@@ -35,22 +35,24 @@
     <script>
 
      // set the dimensions of the canvas
+     var margin = {top: 80, right: 50, bottom: 80, left: 100},
+         width = 1024 - margin.left - margin.right,
+         height = 720 - margin.top - margin.bottom;
 
-     var margin = {top: 20, right: 30, bottom: 30, left: 40},
-         width = 800 - margin.left - margin.right,
-         height = 800 - margin.top - margin.bottom;
-
+     //creating the actual chart
      var chart = d3.select(".chart")
                    .attr("width", width + margin.left + margin.right)
                    .attr("height", height + margin.top + margin.bottom)
                    .append("g")
                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+     //storing our data
      var data = {{data | safe}}
 
      var consumption = data[0]['data']['consumption'];
      console.log(consumption);
 
+     //scaling the graph
      var yScale = d3.scaleLinear()
                     .domain([d3.max(d3.values(consumption)),0])
                     .range([0,height]);
@@ -60,6 +62,7 @@
                     .rangeRound([0,width])
                     .padding(.1);
 
+     //creating the bars
      chart.selectAll(".bar")
           .data(d3.entries(consumption))
           .enter().append("rect")
@@ -69,17 +72,38 @@
           .attr("height", function(d) {return height - yScale(d.value);})
           .attr("width", xScale.bandwidth());
 
+
+     //x, y axis
      var xAxis = d3.axisBottom(xScale);
      var yAxis = d3.axisLeft(yScale);
 
      chart.append("g")
           .attr("class","x axis")
           .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
+          .call(xAxis)
+
+     chart.append("text")
+          .attr("x", width / 2 - margin.right)
+          .attr("y", height + margin.bottom - 20)
+          .text("Consumption");
 
      chart.append("g")
           .attr("class","y axis")
-          .call(yAxis);
+          .call(yAxis)
 
+     chart.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", - margin.right)
+          .attr("x", - width / 2 + margin.left)
+          .style("text-anchor", "middle")
+          .text("Quadrillon British Thermal Units (BTUs)");
+
+     chart.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "30px") 
+        .style("text-decoration", "underline")  
+        .text("U.S Consumption Spending");
     </script>
 </html>
