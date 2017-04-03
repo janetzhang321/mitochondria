@@ -31,6 +31,18 @@
 
     <body>
         <svg class="chart"></svg>
+        <form style="float:right">
+            Year (Between 1949 and 2014)<br>
+            <input type="text" name="year" value="{{year}}"><br>
+            Category<br>
+            <select name="category">
+                <option value="consumption">Consumption</option>
+                <option value="production">Production</option>
+                <option value="import">Import</option>
+                <option value="export">Export</option>
+            </select><br>
+            <input type="submit" value="Submit">
+        </form>
 	  </body>
     <script>
 
@@ -46,11 +58,12 @@
                    .append("g")
                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-     //storing our data
+     //storing our data and parameters
      var data = {{data | safe}}
+     var category = '{{category | safe}}'
+     var year = '{{year}}'
 
-     var consumption = data[0]['data']['consumption'];
-     console.log(consumption);
+     var consumption = data[year - 1949]['data'][category];
 
      //scaling the graph
      var yScale = d3.scaleLinear()
