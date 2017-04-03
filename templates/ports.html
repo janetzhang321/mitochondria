@@ -98,7 +98,7 @@
      chart.append("text")
           .attr("x", width / 2 - margin.right)
           .attr("y", height + margin.bottom - 20)
-          .text("Consumption");
+          .text(category.charAt(0).toUpperCase() + category.slice(1));
 
      chart.append("g")
           .attr("class","y axis")
@@ -112,11 +112,11 @@
           .text("Quadrillon British Thermal Units (BTUs)");
 
      chart.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "30px") 
-        .style("text-decoration", "underline")  
-        .text("U.S Consumption Spending");
+          .attr("x", (width / 2))             
+          .attr("y", 0 - (margin.top / 2))
+          .attr("text-anchor", "middle")  
+          .style("font-size", "30px") 
+          .style("text-decoration", "underline")  
+          .text("U.S " + category.charAt(0).toUpperCase() + category.slice(1) + " Data");
     </script>
 </html>
