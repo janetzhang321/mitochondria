@@ -4,7 +4,7 @@ from utils import energy
 
 app = Flask(__name__)
 data = energy.get_reports()
-#schema = energy._test_interfaces()
+schema = energy._test_interfaces()
 #print(schema)
 
 @app.route("/", methods=['POST','GET'])

@@ -28,18 +28,17 @@
 
 	      </style>
     </head>
-
     <body>
         <svg class="chart"></svg>
-        <form style="float:right">
+        <form>
             Year (Between 1949 and 2014)<br>
             <input type="text" name="year" value="{{year}}"><br>
             Category<br>
             <select name="category">
                 <option value="consumption">Consumption</option>
                 <option value="production">Production</option>
-                <option value="import">Import</option>
-                <option value="export">Export</option>
+                <option value="imports">Import</option>
+                <option value="exports">Export</option>
             </select><br>
             <input type="submit" value="Submit">
         </form>
@@ -48,7 +47,7 @@
 
      // set the dimensions of the canvas
      var margin = {top: 80, right: 50, bottom: 80, left: 100},
-         width = 1024 - margin.left - margin.right,
+         width = 1280 - margin.left - margin.right,
          height = 720 - margin.top - margin.bottom;
 
      //creating the actual chart
@@ -63,21 +62,21 @@
      var category = '{{category | safe}}'
      var year = '{{year}}'
 
-     var consumption = data[year - 1949]['data'][category];
+     var dict = data[year - 1949]['data'][category];
 
      //scaling the graph
      var yScale = d3.scaleLinear()
-                    .domain([d3.max(d3.values(consumption)),0])
+                    .domain([d3.max(d3.values(dict)),0])
                     .range([0,height]);
 
      var xScale = d3.scaleBand()
-                    .domain(d3.entries(consumption).map(function(d){return d.key;}))
+                    .domain(d3.entries(dict).map(function(d){return d.key;}))
                     .rangeRound([0,width])
                     .padding(.1);
 
      //creating the bars
      chart.selectAll(".bar")
-          .data(d3.entries(consumption))
+          .data(d3.entries(dict))
           .enter().append("rect")
           .attr("class","bar")
           .attr("x", function(d) {return xScale(d.key)})
@@ -107,7 +106,7 @@
      chart.append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", - margin.right)
-          .attr("x", - width / 2 + margin.left)
+          .attr("x", - width / 2 + 3 * margin.left)
           .style("text-anchor", "middle")
           .text("Quadrillon British Thermal Units (BTUs)");
 
