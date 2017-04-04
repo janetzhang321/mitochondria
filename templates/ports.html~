@@ -36,7 +36,7 @@
     <script>
 
      // set the dimensions of the canvas
-     var margin = {top: 150, right: 50, bottom: 80, left: 100},
+     var margin = {top: 200, right: 50, bottom: 80, left: 100},
          width = 1280 - margin.left - margin.right,
          height = 720 - margin.top - margin.bottom;
 
