@@ -6,31 +6,31 @@
         </title>
         <script type="text/javascript" src="static/js/ports.js"></script>
         <script type="text/javascript" src="static/js/d3.min.js"></script>
+        <link type = "text/css" rel = "stylesheet" href = "static/ports.css"/>
         <style>
-         .bar{
-             fill: steelblue;
-         }
 
-         .axis text{
-             font: 10px sans-serif;
-         }
+            select[name=category], input[type=text] {
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: 3px solid lightblue;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+                outline: none;
+            }
 
-         .axis path,
-         .axis line{
-             fill: none;
-             stroke: #000;
-             shape-rendering: crispEdges;
-         }
-
-         .x.axis path{
-             display: none;
-         }
-
-	      </style>
+            select[name=category]{
+                border-radius: 10px;
+            }
+            input[type=text]:focus {
+                border: 3px solid dodgerblue;
+            }
+            
+        </style>
     </head>
-    <body>
-        <svg class="chart"></svg>
-        <form>
+    <body style="background-color:oldlace">
+        <center>
+        <form id = "custom" >
             Year (Between 1949 and 2014)<br>
             <input type="text" name="year" value="{{year}}"><br>
             Category<br>
@@ -42,6 +42,8 @@
             </select><br>
             <input type="submit" value="Submit">
         </form>
+        </center>
+        <svg class="chart"></svg>
 	  </body>
     <script>
 
@@ -55,7 +57,7 @@
                    .attr("width", width + margin.left + margin.right)
                    .attr("height", height + margin.top + margin.bottom)
                    .append("g")
-                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
      //storing our data and parameters
      var data = {{data | safe}}
@@ -97,6 +99,7 @@
      chart.append("text")
           .attr("x", width / 2 - margin.right)
           .attr("y", height + margin.bottom - 20)
+          .style("font-variant", "small-caps")
           .text(category.charAt(0).toUpperCase() + category.slice(1));
 
      chart.append("g")
@@ -108,6 +111,7 @@
           .attr("y", - margin.right)
           .attr("x", - width / 2 + 3 * margin.left)
           .style("text-anchor", "middle")
+          .style("font-variant", "small-caps")
           .text("Quadrillon British Thermal Units (BTUs)");
 
      chart.append("text")
@@ -116,6 +120,7 @@
           .attr("text-anchor", "middle")  
           .style("font-size", "30px") 
           .style("text-decoration", "underline")  
+          .style("font-weight", "bold")
           .text("U.S " + category.charAt(0).toUpperCase() + category.slice(1) + " Data");
     </script>
 </html>
