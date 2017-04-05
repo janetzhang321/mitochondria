@@ -1,0 +1,32 @@
+ENTRY FORMAT:
+firstL -- TIMESTAMP
+<CHANGES>
+
+anthonyL -- 2017-03-21 3:30 PM
+created the template files
+setup basic flask app
+
+anthonyL -- 2017-03-23 5:32 PM
+started interacting with the dataset 
+figuring out how to send python data to javascript
+
+anthonyL -- 2017-03-25 7:46 PM
+worked on bar graphs (ports.html) 
+got basic graph to display (axis, bars, labels)
+
+anthonyL -- 2017-03-27 8:50 PM
+created a form prompting for a year and category
+
+anthonyL -- 2017-03-29 4:40 PM
+used a GET request to retrieve form data and update bar 
+graph accordingly
+
+anthonyL -- 2017-04-01 2:36 PM
+added a title to the bar graph
+did some testing to check for bugs
+
+anthonyL -- 2017-04-03 5:10 PM
+added an alert message when user puts in extraneous params
+
+anthonyL -- 2017-04-04 1:54 PM
+worked on adding some style to the bar graph html 
