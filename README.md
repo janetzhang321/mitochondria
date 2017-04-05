@@ -17,19 +17,3 @@ The first part focuses on the usage of energy across the United States. Our map 
 Using a bar graph, we plan on representing the different levels of import and export for all of the pre-specific energy types. Users can scroll over a sidebar to highlight specific energy types.
 
 ![Image of Bar](/images/bars.png?raw=true)
-
-## How to use
-
-To deploy the app, first clone
-
-```
-$ git clone https://github.com/janetzhang321/mitochondria
-```
-
-Optional: Open a virtual environment. 
-
-Run the app
-
-```
-$ python app.py
-```
