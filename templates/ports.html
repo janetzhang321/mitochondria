@@ -12,10 +12,13 @@
             
         </style>
     </head>
+    
+    {% block content%}
+    {% include 'page.html' %}
+    {% endblock %}
+    
     <body style="background-color:oldlace">
         <center>
-        <a href="/">Home</a>
-        <a href="/map">Maps</a>
         <form id = "custom" >
             Year (Between 1949 and 2014)<br>
             <input type="text" name="year" value="{{year}}"><br>
