@@ -2,6 +2,10 @@
 
 Our project focuses on illustrating the usage of energy across major US cities, as well as the overall national import and export of energy sources.
 
+## Team
+
+Anthony Chen, Janet Zhang, Nicholas Ng, Sharon Lin
+
 ## Part I - Statewide Energy Use
 
 The first part focuses on the usage of energy across the United States. Our map will indicate the amount of energy consumed by type within each of the states. The darker the color, the more energy is consumed.
