@@ -4,13 +4,217 @@
         <title>
             Map
         </title>
-        <script src="../utils/dynamicEnergy.js"></script>
-        <script src="../utils/energy.js"></script>
-        <script src="../utils/staticEnergy.js"></script>
+
+        <script src="../static/js/dynamicEnergy.js"></script>
+        <script src="../static/js/states.js"></script>
+        <!--<script src="../utils/energy.py"></script>-->
+        <script src="../static/js/staticEnergy.js"></script>
+	<meta charset = "utf-8">
+	<style>
+	  .state{
+	  fill:none;
+	  stroke:#a9a9a9;
+	  stroke-width:1;
+	  }
+
+	  .state:hover{
+	  fill-opacity:0.5;
+	  }
+
+	  #tooltip {
+                position: absolute;
+                text-align: center;
+                padding: 20px;
+                margin: 10px;
+                font: 12px sans-serif;
+                background: lightsteelblue;
+                border: 1px;
+                border-radius: 2px;
+                pointer-events: none;
+        }
+        #tooltip h4{
+                margin:0;
+                font-size:14px;
+        }
+        #tooltip{
+                background:rgba(0,0,0,0.9);
+                border:1px solid grey;
+                border-radius:5px;
+                font-size:12px;
+                width:auto;
+                padding:4px;
+                color:white;
+                opacity:0;
+        }
+        #tooltip table{
+                table-layout:fixed;
+        }
+        #tooltip tr td{
+                padding:0;
+                margin:0;
+        }
+        #tooltip tr td:nth-child(1){
+                width:50px;
+        }
+        #tooltip tr td:nth-child(2){
+                text-align:center;
+        }
+
+	</style>
+
     </head>
     <body>
       {% block content%}
       {% include 'page.html' %}
+
+      <center><h1><div id="main">Main Title</div></h1></center>
+
+      <center><h4>Darker colors indicate greater use.</h4></center>
+      <center>
+        <button type="button" class="btn"><div id="nuclear">Nuclear</div></button>
+	<button type="button" class="btn"><div id="gas">Natural Gas</div></button>
+	<button type="button" class="btn"><div id="biomass">Biomass</div></button>
+	<button type="button" class="btn"><div id="jetfuel">Jet Fuel</div></button>
+	<button type="button" class="btn"><div id="coal">Coal</div></button>
+	<button type="button" class="btn"><div id="hydro">Hydroelectric Power</div></button>
+	<button type="button" class="btn"><div id="clear_map">Clear Map</div></button>
+	</center>
+      <br>
+      <center><svg width="960" height="600" id="statessvg"></svg></center>
+
+	<script src="../static/js/uStates.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script>
+
+	  function tooltipHtml(n, d){     /* function to create html content string in tooltip div. */
+                return "<h4>"+n+"</h4><table>"+
+                        "<tr><td>Low</td><td>"+(d.low)+"</td></tr>"+
+                        "<tr><td>Average</td><td>"+(d.avg)+"</td></tr>"+
+                        "<tr><td>High</td><td>"+(d.high)+"</td></tr>"+
+                        "</table>";
+        }
+
+
+	  var clearmap = function(){
+	  try{
+	  clear();
+	  }
+	  catch(err){
+	  }
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(0.1/100)}; });
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+	  d3.select(self.frameElement).style("height", "600px");
+	  main.innerHTML = "United States Energy Use";
+	  }
+
+	  clearmap();
+
+
+
+	  var svg = document.getElementById("statessvg");
+	  var nuclear = document.getElementById("nuclear");
+	  var gas = document.getElementById("gas");
+	  var biomass = document.getElementById("biomass");
+	  var jetfuel = document.getElementById("jetfuel");
+	  var coal = document.getElementById("coal");
+	  var hydro = document.getElementById("hydro");
+	  var title = document.getElementById("main");
+	  var clear_map = document.getElementById("clear_map");
+
+	  var changeNuclear = function(){
+	  clear();
+
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  var value = state_list1[d];
+	  console.log(value["Nuclear Electric Power"]);
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(value["Nuclear Electric Power"]/100)}; });
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+
+	  d3.select(self.frameElement).style("height", "600px");
+	  }
+
+	  var changeGas = function(){
+	  clear();
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  var value = state_list1[d];
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(value["Natural Gas"]/100)}; });
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+	  d3.select(self.frameElement).style("height", "600px");
+	  }
+
+	  var changeBiomass = function(){
+	  clear();
+
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  var value = state_list1[d];
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(value["Biomass"]/100)}; });
+	  console.log(state_list["CT"]);
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+	  d3.select(self.frameElement).style("height", "600px");
+	  }
+
+
+	  var changeJet = function(){
+	  clear();
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  var value = state_list1[d];
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(value["Jet Fuel"]/100)}; });
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+	  d3.select(self.frameElement).style("height", "600px");
+	  }
+
+	  var changeCoal = function(){
+	  clear();
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  var value = state_list1[d];
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(value["Coal"]/100)}; });
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+	  d3.select(self.frameElement).style("height", "600px");
+	  }
+
+	  var changeHydro = function(){
+	  clear();
+	  var state = ["HI","AK","FL","NH","MI","VT","ME","RI","NY","PA","NJ","DE","MD","VA",
+	  "WV","OH","IN","IL","CT","WI","NC","DC","MA","TN","AR","MO","GA","SC",
+	  "KY","AL","LS","MS","IA","MN","OK","TX","NM","KS","NE","SD","ND","WY","MT","CO","ID","UT","AZ","NV","OR","WA","CA"].forEach(function(d){
+	  var value = state_list1[d];
+	  state_list[d] ={color:d3.interpolate("#ffffcc", "#800026")(value["Hydroelectric Power"]/100)}; });
+	  uStates.draw("#statessvg", state_list, tooltipHtml);
+	  d3.select(self.frameElement).style("height", "600px");
+	  }
+
+
+
+	  function clear(e){
+	  while (svg.lastChild) {
+	  svg.removeChild(svg.lastChild);
+	  }
+	  run = false;
+	  }
+
+	  
+	  nuclear.addEventListener("click", changeNuclear);
+	  gas.addEventListener("click", changeGas);
+	  clear_map.addEventListener("click", clearmap);
+	  biomass.addEventListener("click", changeBiomass);
+	  jetfuel.addEventListener("click", changeJet);
+	  coal.addEventListener("click", changeCoal);
+	  hydro.addEventListener("click", changeHydro);
+
+	</script>
       {% endblock %}
     </body>
 </html>
