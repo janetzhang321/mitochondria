@@ -2,30 +2,48 @@ ENTRY FORMAT:
 firstL -- TIMESTAMP
 <CHANGES>
 
-anthonyL -- 2017-03-21 3:30 PM
+nickN -- 2017-03-29 12:30 PM
+Found suitable datasets for the state energy display
+
+anthonyL -- 2017-03-29 3:30 PM
 created the template files
 setup basic flask app
 
-anthonyL -- 2017-03-23 5:32 PM
+nickN -- 2017-03-30 12:30 PM
+Downloaded and standardized data formats
+
+anthonyL -- 2017-03-30 5:32 PM
 started interacting with the dataset 
 figuring out how to send python data to javascript
 
-anthonyL -- 2017-03-25 7:46 PM
+nickN -- 2017-03-31 5:00 PM
+Began writing a script to parse the 150 datasets and aggregate them
+
+anthonyL -- 2017-03-31 7:46 PM
 worked on bar graphs (ports.html) 
 got basic graph to display (axis, bars, labels)
 
-anthonyL -- 2017-03-27 8:50 PM
+nickN -- 2017-04-01 3:00 PM
+Created database to organize and store all state energy data
+
+anthonyL -- 2017-04-01 8:50 PM
 created a form prompting for a year and category
 
-anthonyL -- 2017-03-29 4:40 PM
+nickN -- 2017-04-02 4:00 PM
+Began formating homepage with bootstrap
+
+anthonyL -- 2017-04-02 4:40 PM
 used a GET request to retrieve form data and update bar 
 graph accordingly
 
-anthonyL -- 2017-04-01 2:36 PM
+anthonyL -- 2017-04-03 2:36 PM
 added a title to the bar graph
 did some testing to check for bugs
 
-anthonyL -- 2017-04-03 5:10 PM
+nickN -- 2017-04-04 9:00 PM
+created standardized navbar for all pages
+
+anthonyL -- 2017-04-04 5:10 PM
 added an alert message when user puts in extraneous params
 
 anthonyL -- 2017-04-04 1:54 PM
